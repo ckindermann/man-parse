@@ -1,12 +1,12 @@
 (ns manpar.w3c
-  (:require [instaparse.core :as insta] 
+  (:require [instaparse.core :as insta]
             [cheshire.core :as cs])
   (:gen-class))
 
 ;This follows the Grammar for Manchester Syntax (but we cannot parse IRIs with the symbols '(' or ')' )
 (def parser
   (insta/parser
-    "S = Description 
+   "S = Description 
     Description = Conjunction <' or '> Conjunction { <' or '> Conjunction }
                 | Conjunction
     Conjunction = classIRI ' that ' [ ' not ' ] Restriction { ' and ' [ 'not ' ] Restriction }
