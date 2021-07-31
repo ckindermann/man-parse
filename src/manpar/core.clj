@@ -26,7 +26,16 @@
         obi3 "obo:IAO_0000109 and (not (obo:IAO_0000416))"
         obi4 "obo:BFO_0000051 some (obo:IAO_0000027 and (obo:IAO_0000136 some obo:IAO_0000096))"
         obi5 "obo:OBI_0000299 some (obo:IAO_0000027 and (obo:IAO_0000136 some (obo:BFO_0000040 and (obo:RO_0000087 some obo:OBI_0000067))))" 
-        obi6 "(obo:OBI_0000293 some (obo:IAO_0000010 or obo:IAO_0000096)) and (obo:OBI_0000299 some obo:IAO_0000010)"]
+        obi6 "(obo:OBI_0000293 some (obo:IAO_0000010 or obo:IAO_0000096)) and (obo:OBI_0000299 some obo:IAO_0000010)"
+        
+    ;axiom1 EquivalentTo: inverse (obo:OBI_0000295) 
+
+        axiom1 "Class: obo:IAO_0000065 SubClassOf: obo:IAO_0000064" 
+        axiom2 "Class: obo:OBI_0000070 SubClassOf: obo:OBI_0000299 some (obo:IAO_0000027 and (obo:IAO_0000136 some (obo:BFO_0000040 and (obo:RO_0000087 some obo:OBI_0000067))))" 
+        axiom3 "Class: obo:APOLLO_SV_00000008 EquivalentTo: obo:OBI_0000011 and (obo:OBI_0000299 some (obo:IAO_0000010 or obo:IAO_0000096))" 
+        axiom4 "Class: obo:IAO_0000078 EquivalentTo: {obo:IAO_0000002 , obo:IAO_0000120 , obo:IAO_0000121 , obo:IAO_0000122 , obo:IAO_0000123 , obo:IAO_0000124 , obo:IAO_0000125 , obo:IAO_0000423 , obo:IAO_0000428}" 
+        axiom5 "Class: obo:OBI_0000070 DisjointWith: obo:OBI_0000339, obo:OBI_0200000, obo:OBI_0600013"
+        ]
 
 
   (println "")
@@ -53,6 +62,15 @@
   (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser obi4))))
   (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser obi5))))
   (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser obi6))))
+
+  (println "")
+  (println "Test example axioms taken from obi")
+
+  (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser axiom1))))
+  (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser axiom2))))
+  (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser axiom3))))
+  (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser axiom4))))
+  (println (cs/generate-string (insta/transform prototype/ofn-transducer (prototype/parser axiom5))))
 
 
   ))

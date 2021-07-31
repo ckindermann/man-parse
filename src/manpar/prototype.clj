@@ -5,7 +5,29 @@
 
 (def parser
   (insta/parser
-    "S = ClassExpression 
+    "S = AxiomExpression
+       | ClassExpression 
+
+    <AxiomExpression> = SubClassOf
+                      | EquivalentClasses
+                      | DisjointClasses
+                      | DisjointUnion
+
+    SubClassOf = <'Class:'> <WS> SubClass <WS> <'SubClassOf:'> <WS> SuperClass
+    SubClass = ClassIRI
+    SuperClass = ClassExpression 
+
+    DisjointClasses = <'Class:'> <WS> ClassIRI <WS> <'DisjointWith:'> <WS> ClassExpression
+                    | <'Class:'> <WS> ClassIRI <WS> <'DisjointWith:'> <WS> ClassList 
+
+    EquivalentClasses = <'Class:'> <WS> ClassIRI <WS> <'EquivalentTo:'> <WS> ClassExpression
+                    | <'Class:'> <WS> ClassIRI <WS> <'EquivalentTo:'> <WS> ClassList 
+   
+    DisjointUnion = <'Class:'> <WS> ClassIRI <WS> <'DisjointUnionOf'> <WS> ClassList
+
+    <ClassList> = [<'{'>]  ClassExpression [<WS>] <','> <WS> ClassExpression { [<WS>] <','> <WS> ClassExpression } [<'}'>]
+
+
     <ClassExpression> = Primary
                     | <'('> Primary <')'>
    
@@ -42,7 +64,7 @@
     ClassIRI = IRI
     objectPropertyIRI = IRI
     <Individual> = IRI
-    <IRI> = #'[^ ()\\s]*'
+    <IRI> = #'[^ ,{}()\\s]*'
 
     WS = #'\\s+' 
 
@@ -57,6 +79,13 @@
   :S (fn [x] x)
   :ClassIRI (fn [x] x)
   :objectPropertyIRI (fn [x] x)
+  :SubClassOf (fn [x y] (vector "SubClassOf" x y))
+  :SubClass (fn [x] x)
+  :SuperClass (fn [x] x)
+  :EquivalentClasses (fn [& args] (vec (cons "EquivalentClasses" args)))
+  :DisjointClasses (fn [& args] (vec (cons "DisjointClasses" args)))
+  :DisjointUnion (fn [& args] (vec (cons "DisjointUnionOf" args)))
+
   :Existential (fn [x y] (vector "SomeValuesFrom" x y))
   :Universal (fn [x y] (vector "AllValuesFrom" x y))
   :MinCardinality (fn [& args] (vec (cons "MinCardinality" args)))
