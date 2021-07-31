@@ -15,9 +15,9 @@
             | Negation
             | ClassIRI
     
-    Conjunction = ClassExpression <' and '> ClassExpression { <' and '> ClassExpression }
-    Disjunction = ClassExpression <' or '> ClassExpression { <' or '> ClassExpression }
-    Negation = <'not '> ClassExpression
+    Conjunction = ClassExpression <WS> <'and'> <WS> ClassExpression {<WS> <'and'> <WS> ClassExpression }
+    Disjunction = ClassExpression <WS> <'or'> <WS> ClassExpression {<WS> <'or'> <WS> ClassExpression }
+    Negation = <'not'> <WS> ClassExpression
 
     <Restriction> = Existential
                 | Universal
@@ -27,22 +27,24 @@
                 | Self
                 | IndividualValue
    
-    Existential = ObjectPropertyExpression <' some '> ClassExpression 
-    Universal = ObjectPropertyExpression <' only '> ClassExpression
-    MinCardinality = ObjectPropertyExpression <' min '> NonNegativeInteger [ <' '> ClassExpression ]
-    MaxCardinality = ObjectPropertyExpression <' max '> NonNegativeInteger [ <' '> ClassExpression ]
-    ExactCardinality = ObjectPropertyExpression <' exactly '> NonNegativeInteger [ <' '> ClassExpression ]
-    Self = ObjectPropertyExpression <' Self'>
-    IndividualValue = ObjectPropertyExpression <' value '> Individual
+    Existential = ObjectPropertyExpression <WS> <'some'> <WS> ClassExpression 
+    Universal = ObjectPropertyExpression <WS> <'only'> <WS> ClassExpression
+    MinCardinality = ObjectPropertyExpression <WS> <'min'> <WS> NonNegativeInteger [ <WS> ClassExpression ]
+    MaxCardinality = ObjectPropertyExpression <WS> <'max'> <WS> NonNegativeInteger [ <WS> ClassExpression ]
+    ExactCardinality = ObjectPropertyExpression <WS> <'exactly'> <WS> NonNegativeInteger [ <WS> ClassExpression ]
+    Self = ObjectPropertyExpression <WS> <'Self'>
+    IndividualValue = ObjectPropertyExpression <WS> <'value'> <WS> Individual
 
     <ObjectPropertyExpression> = objectPropertyIRI 
                              | InverseObjectProperty
-    InverseObjectProperty = <' inverse '> objectPropertyIRI
+    InverseObjectProperty = <'inverse'> <WS> objectPropertyIRI
 
     ClassIRI = IRI
     objectPropertyIRI = IRI
     <Individual> = IRI
     <IRI> = #'[^ ()\\s]*'
+
+    WS = #'\\s+' 
 
     <NonNegativeInteger> = Zero | PositiveInteger
     <PositiveInteger> = NonZero { digit }
