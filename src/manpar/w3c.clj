@@ -16,9 +16,9 @@
 
     Restriction = ObjectPropertyExpression <' some '> Primary 
                 | ObjectPropertyExpression <' only '> Primary
-                | ObjectPropertyExpression <' min '> NonNegativeInteger [ Primary ]
-                | ObjectPropertyExpression <' max '> NonNegativeInteger [ Primary ]
-                | ObjectPropertyExpression <' exactly '> NonNegativeInteger [ Primary ]
+                | ObjectPropertyExpression <' min '> NonNegativeInteger <' '> [ Primary ]
+                | ObjectPropertyExpression <' max '> NonNegativeInteger <' '> [ Primary ]
+                | ObjectPropertyExpression <' exactly '> NonNegativeInteger <' '> [ Primary ]
     <atomic> = classIRI
            | <'('> Description <')'>
     NonNegativeInteger = Zero | PositiveInteger
